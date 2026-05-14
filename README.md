@@ -46,12 +46,3 @@ types/index.ts          # Transaction, PaginatedResponse, …
 
 **Rough data flow:** `usePaginatedTransactions` loads a page → `TransactionTable` renders rows → user triggers **retry** → `useTransactionPaymentRetries` calls `retryPayment` per id → status overrides update the table → `useTimedToasts` shows a toast per settled retry.
 
-## Swapping mocks for a real API
-
-Keep the same **TypeScript shapes** in `types/` (or add an adapter). Replace the bodies of `fetchTransactions`, `downloadInvoice`, and `retryPayment` in `lib/transaction.ts` (or split into `lib/apiClient.ts`) with real `fetch` calls. UI hooks already expect promises and typed results.
-
-## Interview / design Q&A
-
-For **why** these patterns were chosen (hooks, toasts, tests, tradeoffs), see **[INTERVIEW-README.md](./INTERVIEW-README.md)**.
-
-For **file-by-file and function-level flows**, see **[CODEBASE.md](./CODEBASE.md)**. Vitest discovers **`__tests__/**/*.test.{ts,tsx}`** next to **`components/`**, **`hooks/`**, and **`utils/`**.
